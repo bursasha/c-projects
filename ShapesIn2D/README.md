@@ -1,6 +1,4 @@
-# The task of using functions and working with the math.h library
-
-The task is to develop a program that compares the areas and perimeters of two given shapes.
+# The task is to develop a program that compares the areas and perimeters of two given shapes.
 
 There are given two planar shapes in the input. A shape may be any of:
 - triangle - the input consists of letter T followed by three decimal numbers (sides),
