@@ -1,1 +1,1 @@
-# The task of using input reading and switch case construction
+# The task of using input reading and switch case construction.
