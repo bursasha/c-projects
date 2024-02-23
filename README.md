@@ -21,7 +21,7 @@ This repository contains my university projects completed in the C programming l
 
 * Each folder corresponds to a separate project. 📁
 * In each folder you will find:
-    * ... .c: file with the program code. 💾
-    * README.md: auxiliary file with a detailed description of the task. 📃
+    * `... .c`: file with the program code. 💾
+    * `README.md`: auxiliary file with a detailed description of the task. 📃
 
 ## 😊 I would be happy if you take a look at my projects! 😊
