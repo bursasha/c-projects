@@ -1,16 +1,36 @@
 #include <stdio.h>
 #include <math.h>
 
-// number_position - число, которое указывает на цифру конкретного числа в последовательности чисел в данной системе счисления
-// number_system - система счисления, в которой работаем с number_position
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
-// isntValid - проверка вводных данных
+/**
+ * @brief
+ * Checks if the input values are valid.
+ *
+ * This function verifies that the position in the sequence is non-negative and the base is within the range [2, 36].
+ *
+ * @param number_position - The position in the sequence.
+ * @param number_system - The base of the number system.
+ * @return 1 if the input values are invalid, 0 otherwise.
+ */
 long long int isntValid (long long int number_position, int number_system)
 {
 	return (number_position < 0 || number_system < 2 || number_system > 36);
 }
 
-// getSize - получение разрядности числа, на цифру которого указывает number_positon 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Gets the size (number of digits) of the number at the given position in the sequence.
+ *
+ * This function calculates the number of digits of the number that contains the digit at the given position in the sequence.
+ *
+ * @param number_position - The position in the sequence.
+ * @param number_system - The base of the number system.
+ * @return The size (number of digits) of the number.
+ */
 long long int getSize (long long int number_position, int number_system)
 {
 	long long int i = (number_system - 1), size = 1;
@@ -22,7 +42,18 @@ long long int getSize (long long int number_position, int number_system)
 	return size;
 }
 
-// getNumberBase - генерирует числа всех предыдущих разрядностей
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Gets the base number for the given size.
+ *
+ * This function calculates the base number for the given size by generating the numbers of all previous sizes.
+ *
+ * @param number_system - The base of the number system.
+ * @param size - The size (number of digits) of the number.
+ * @return The base number.
+ */
 long long int getNumberBase (int number_system, int size)
 {
 	long long int number_base = number_system;
@@ -36,7 +67,18 @@ long long int getNumberBase (int number_system, int size)
 	return number_base;
 }
 
-// getDigitBase - генерирует цифры чисел всех предыдущих разрядностей
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Gets the base digit for the given size.
+ *
+ * This function calculates the base digit for the given size by generating the digits of all previous sizes.
+ *
+ * @param number_system - The base of the number system.
+ * @param size - The size (number of digits) of the number.
+ * @return The base digit.
+ */
 long long int getDigitBase (int number_system, int size)
 {
 	long long int digit_base = number_system;
@@ -50,7 +92,21 @@ long long int getDigitBase (int number_system, int size)
 	return digit_base;
 }
 
-// getPosition - рассчитывает число, на которое указывает number_position
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Gets the number at the given position in the sequence.
+ *
+ * This function calculates the number that contains the digit at the given position in the sequence.
+ *
+ * @param number_position - The position in the sequence.
+ * @param number_system - The base of the number system.
+ * @param number_base - The base number.
+ * @param digit_base - The base digit.
+ * @param size - The size (number of digits) of the number.
+ * @return The number at the given position.
+ */
 long long int getPosition (long long int number_position, int number_system, long long int number_base, long long int digit_base, int size)
 {
 	long long int result = 0;
@@ -62,7 +118,18 @@ long long int getPosition (long long int number_position, int number_system, lon
 	return result;
 }
 
-// systemConvertation - конвертация result из getPosition в систему счисления number_system
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Converts the result to the specified base and prints it.
+ *
+ * This function converts the result from getPosition to the specified base and prints the digits.
+ *
+ * @param result - The number to be converted.
+ * @param size - The size (number of digits) of the number.
+ * @param number_system - The base of the number system.
+ */
 void systemConvertation (long long int result, int size, int number_system)
 {
 	const int max_array_size = 111;
@@ -81,7 +148,18 @@ void systemConvertation (long long int result, int size, int number_system)
 	printf("\n");
 }
 
-// getIndexPosition - рассчитывает положение индекса конкретной цифры в числе result
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Prints the index position of the digit in the number.
+ *
+ * This function calculates and prints the position of the digit in the number for the given position in the sequence.
+ *
+ * @param number_position - The position in the sequence.
+ * @param digit_base - The base digit.
+ * @param size - The size (number of digits) of the number.
+ */
 void getIndexPosition (long long int number_position, long long int digit_base, int size)
 {
 	int index_position = (number_position - digit_base) % size;
@@ -89,6 +167,8 @@ void getIndexPosition (long long int number_position, long long int digit_base, 
 	printf("^\n");
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 int main()
 {

@@ -1,17 +1,36 @@
-#ifndef __PROGTEST__
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <ctype.h>
 
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Represents a node in a singly linked list of integers.
+ *
+ * This structure holds an integer value and a pointer to the next node in the list.
+ */
 typedef struct TItem
 {
 	int m_Val;
 	struct TItem *m_Next;
 } TITEM;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Creates a new linked list item with the specified value.
+ *
+ * Allocates memory for a new TITEM and initializes its value and next pointer.
+ *
+ * @param val - The integer value to be stored in the new item.
+ * @param next - Pointer to the next item in the list.
+ * @return Pointer to the newly created item.
+ */
 TITEM *createItem(int val, TITEM *next)
 {
 	TITEM *n = (TITEM *)malloc(sizeof(*n));
@@ -20,6 +39,16 @@ TITEM *createItem(int val, TITEM *next)
 	return n;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Deletes the entire linked list.
+ *
+ * Frees all nodes in the list and sets the head pointer to NULL.
+ *
+ * @param l - Pointer to the head of the list.
+ */
 void deleteList(TITEM *l)
 {
 	while (l)
@@ -30,8 +59,17 @@ void deleteList(TITEM *l)
 	}
 }
 
-#endif /* __PROGTEST__ */
+// ---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * @brief
+ * Validates the linked list to ensure it is sorted in ascending order.
+ *
+ * Traverses the list and checks if each node's value is less than or equal to the next node's value.
+ *
+ * @param x - Pointer to the head of the list.
+ * @return 1 if the list is valid, 0 otherwise.
+ */
 int validateList(TITEM *x)
 {
 	int valid = 0;
@@ -44,6 +82,17 @@ int validateList(TITEM *x)
 	return valid;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Connects a node into the result list at the correct position.
+ *
+ * Inserts the node into the result list, maintaining the sorted order.
+ *
+ * @param res - Pointer to the pointer of the result list.
+ * @param x - Pointer to the pointer of the node to be connected.
+ */
 void connectNode(TITEM **res, TITEM **x)
 {
 	TITEM *tmp = *res, *to_connect = *x;
@@ -74,6 +123,18 @@ void connectNode(TITEM **res, TITEM **x)
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Connects multiple sorted linked lists into a single sorted list.
+ *
+ * Merges the given lists into one sorted list, validating each list before merging.
+ *
+ * @param x - Array of pointers to the head of each list.
+ * @param nr - The number of lists.
+ * @return Pointer to the head of the resulting merged list, or NULL if any list is invalid.
+ */
 TITEM *connectLists(TITEM **x, int nr)
 {
 	for (int i = 0; i < nr; i++)
@@ -98,11 +159,14 @@ TITEM *connectLists(TITEM **x, int nr)
 	return res;
 }
 
-#ifndef __PROGTEST__
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
 {
 	TITEM *a[5], *res;
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a[0] = createItem(1, createItem(5, createItem(19, createItem(24, NULL))));
 	a[1] = createItem(3, createItem(7, createItem(17, createItem(25, NULL))));
@@ -118,11 +182,15 @@ int main(int argc, char *argv[])
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next == NULL);
 	deleteList(res);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a[0] = createItem(8, NULL);
 	res = connectLists(a, 1);
 	assert(res->m_Val == 8);
 	assert(res->m_Next == NULL);
 	deleteList(res);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a[0] = createItem(-1, createItem(3, createItem(5, NULL)));
 	a[1] = createItem(2, createItem(3, createItem(7, NULL)));
@@ -135,6 +203,8 @@ int main(int argc, char *argv[])
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Val == 7);
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next == NULL);
 	deleteList(res);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a[0] = createItem(2, createItem(4, createItem(4, NULL)));
 	a[1] = createItem(5, createItem(6, NULL));
@@ -149,6 +219,8 @@ int main(int argc, char *argv[])
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Val == 6);
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next == NULL);
 	deleteList(res);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a[0] = createItem(-20, createItem(-5, createItem(-5, createItem(-5, createItem(100, NULL)))));
 	a[1] = createItem(-5, createItem(50, NULL));
@@ -172,6 +244,8 @@ int main(int argc, char *argv[])
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next == NULL);
 	deleteList(res);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a[0] = createItem(-2165422, createItem(2, createItem(2, createItem(2, createItem(3425555, NULL)))));
 	a[1] = createItem(-3000000, NULL);
 	a[2] = createItem(2, createItem(2, createItem(3425555, NULL)));
@@ -193,6 +267,8 @@ int main(int argc, char *argv[])
 	assert(res->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next->m_Next == NULL);
 	deleteList(res);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a[0] = createItem(8, createItem(11, NULL));
 	a[1] = createItem(4, createItem(4, NULL));
 	a[2] = createItem(-5, createItem(0, NULL));
@@ -201,6 +277,8 @@ int main(int argc, char *argv[])
 	assert(res == NULL);
 	deleteList(res);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a[0] = createItem(3, createItem(3, NULL));
 	a[1] = createItem(4, createItem(4, NULL));
 	a[2] = NULL;
@@ -208,7 +286,7 @@ int main(int argc, char *argv[])
 	assert(res == NULL);
 	deleteList(res);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	return 0;
 }
-
-#endif /* __PROGTEST__ */

@@ -1,16 +1,35 @@
-#ifndef __PROGTEST__
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <assert.h>
-#endif /* __PROGTEST__ */
 
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Represents a structure to hold a word.
+ *
+ * This structure is used to store a word from the input strings.
+ */
 typedef struct
 {
 	char *word;
 } WORDS;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Compares two WORDS structures case insensitively.
+ *
+ * This function is used for sorting the words case insensitively.
+ *
+ * @param first - Pointer to the first WORDS structure.
+ * @param second - Pointer to the second WORDS structure.
+ * @return A negative, zero, or positive integer if the first word is less than, equal to, or greater than the second word, respectively.
+ */
 int compareWords(const void *first, const void *second)
 {
 	const WORDS *arg_1 = (WORDS *)first;
@@ -18,6 +37,19 @@ int compareWords(const void *first, const void *second)
 	return (strcasecmp(arg_1->word, arg_2->word));
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Checks if a word is already present in the list of words.
+ *
+ * This function is used to avoid counting duplicate words.
+ *
+ * @param words_count - The current count of words.
+ * @param token - The word to check for duplication.
+ * @param words - The list of words.
+ * @return 1 if the word is already present, -1 otherwise.
+ */
 int wordRepeat(const int words_count, const char *token, WORDS *words)
 {
 	for (int i = 0; i < words_count - 1; i++)
@@ -28,6 +60,18 @@ int wordRepeat(const int words_count, const char *token, WORDS *words)
 	return -1;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Compares two strings to check if they are composed of the same words.
+ *
+ * This function splits the strings into words, removes duplicates, sorts them, and then compares.
+ *
+ * @param a - The first string to compare.
+ * @param b - The second string to compare.
+ * @return 1 if the strings are composed of the same words, 0 otherwise.
+ */
 int sameWords ( const char * a, const char * b )
 {
 	char delimiter_signs[] = " \t1234567890.,:;'/\"?!@#$%^&*()[]{}§+~<>_=-'\0'\n";
@@ -110,13 +154,17 @@ int sameWords ( const char * a, const char * b )
 	return 1;
 }
 
-#ifndef __PROGTEST__
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
 int main ( int argc, char * argv [] )
 {
-  assert ( sameWords ( "Hello students.", "HELLO studEnts!" ) == 1 );
-  assert ( sameWords ( " He said 'hello!'", "'Hello.' he   said." ) == 1 );
-  assert ( sameWords ( "He said he would do it.", "IT said: 'He would do it.'" ) == 1 );
-  assert ( sameWords ( "one two three", "one two five" ) == 0 );
-  return 0;
+	assert ( sameWords ( "Hello students.", "HELLO studEnts!" ) == 1 );
+	assert ( sameWords ( " He said 'hello!'", "'Hello.' he   said." ) == 1 );
+	assert ( sameWords ( "He said he would do it.", "IT said: 'He would do it.'" ) == 1 );
+	assert ( sameWords ( "one two three", "one two five" ) == 0 );
+
+	// -----------------------------------------------------------------------------------------------------------------
+
+	return 0;
 }
-#endif /* __PROGTEST__ */

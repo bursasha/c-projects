@@ -2,26 +2,65 @@
 #include <stdlib.h>
 #include <string.h>
 
-// struct ITEM - структура для хранения названия продукта и количества его проданных штук.
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Represents a product with a name and the quantity sold.
+ *
+ * This structure is used to keep track of each unique product's sales within the store.
+ */
 typedef struct
 {
 	char title[100];
 	int quantity;
 } ITEM;
 
-// int item_bufferNotValid - проверка валидности названия введенного продукта, проверка длины. // еще добавить проверку на вайтспэйсы!
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Checks if the product name is valid.
+ *
+ * Ensures the product name length is within the acceptable range of 1 to 99 characters.
+ *
+ * @param item_buffer - The name of the product to be validated.
+ * @return 1 if the name is invalid, 0 otherwise.
+ */
 int item_bufferNotValid(const char *item_buffer)
 {
 	return (strlen(item_buffer) <= 0 || strlen(item_buffer) > 99);
 }
 
-// int operation_signNotValid - проверка валидности знака операции.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Checks if the operation sign is valid.
+ *
+ * Validates that the operation sign is one of the following: '+', '#', '?'.
+ *
+ * @param operation_sign - The operation sign to be validated.
+ * @return 1 if the sign is invalid, 0 otherwise.
+ */
 int operation_signNotValid(const char operation_sign)
 {
 	return (operation_sign != '+' && operation_sign != '#' && operation_sign != '?');
 }
 
-// int elementsCompare - функция для qsort, сравнивает 2 соседние структуры на параметр title, если тайтлы одинаковы возвращает 0, если нет то 1 или -1. Оставить ссылку на источник!
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Compares two ITEM structures by quantity sold.
+ *
+ * Used by qsort to sort the array of ITEM structures in descending order based on quantity sold.
+ *
+ * @param first - Pointer to the first ITEM structure.
+ * @param second - Pointer to the second ITEM structure.
+ * @return Negative value if second is greater, positive if first is greater, 0 if equal.
+ */
 int elementsCompare(const void *first, const void *second)
 {
 	const ITEM *arg_1 = (ITEM *)first;
@@ -29,7 +68,19 @@ int elementsCompare(const void *first, const void *second)
 	return (arg_2->quantity) - (arg_1->quantity);
 }
 
-// int itemInsideArray - проверка наличия введенного продукта в массиве items.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Checks if a given product is already in the items array.
+ *
+ * Searches the items array for a product with the given name.
+ *
+ * @param items - Array of ITEM structures.
+ * @param item_count - Number of items in the array.
+ * @param item_buffer - The name of the product to search for.
+ * @return Index of the product if found, -1 otherwise.
+ */
 int itemInsideArray(ITEM *items, const int item_count, const char *item_buffer)
 {
 	for (int i = 0; i < item_count; i++)
@@ -40,7 +91,19 @@ int itemInsideArray(ITEM *items, const int item_count, const char *item_buffer)
 	return -1;
 }
 
-// int items_trackedRepeatCheck - повышает прогоняемый элемент i если количество соседних товаров одинаковое.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Adjusts the index to account for products with the same quantity sold.
+ *
+ * Moves the index forward to cover products that share the same sales quantity.
+ *
+ * @param items - Array of ITEM structures.
+ * @param item_count - Number of items in the array.
+ * @param i - Current index in the array.
+ * @return Updated index to cover all products with the same quantity.
+ */
 int items_trackedRepeatCheck(ITEM *items, const int item_count, int i)
 {
 	while (i + 1 < item_count)
@@ -53,7 +116,21 @@ int items_trackedRepeatCheck(ITEM *items, const int item_count, int i)
 	return i;
 }
 
-// int items_trackedPrint - печатает отслеживаемые товары и их количество, а также их общее количество.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Prints the list of tracked products and their quantities.
+ *
+ * Displays the products and their sales count within the specified range, along with the total sold quantity.
+ *
+ * @param items - Array of ITEM structures.
+ * @param first_repeat - The starting index of the current range.
+ * @param last_repeat - The ending index of the current range.
+ * @param tracked_sold - The total quantity of tracked items.
+ * @param operation_sign - The current operation being processed.
+ * @return Updated total quantity of tracked items.
+ */
 int items_trackedPrint(ITEM *items, const int first_repeat, const int last_repeat, int tracked_sold, const char operation_sign)
 {
 	if (first_repeat < last_repeat)
@@ -74,6 +151,19 @@ int items_trackedPrint(ITEM *items, const int first_repeat, const int last_repea
 	return tracked_sold;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Manages and prints the list of top N products.
+ *
+ * Handles the sorting and printing of the top selling products and the total quantity sold.
+ *
+ * @param items - Array of ITEM structures.
+ * @param const_tracked_count - The number of top products to track.
+ * @param item_count - Number of items in the array.
+ * @param operation_sign - The current operation being processed.
+ */
 void itemsTracked(ITEM *items, const int const_tracked_count, const int item_count, const char operation_sign)
 {
 	int first_repeat = 0, last_repeat = 0, tracked_count = const_tracked_count, tracked_sold = 0;
@@ -88,6 +178,9 @@ void itemsTracked(ITEM *items, const int const_tracked_count, const int item_cou
 	}
 	printf("Nejprodavanejsi zbozi: prodano %d kusu\n", tracked_sold);
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 int main()
 {

@@ -3,6 +3,19 @@
 #include <string.h>
 #include <ctype.h>
 
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief Validates if the abbreviation contains only uppercase letters.
+ *
+ * This function checks if each character in the given abbreviation is an uppercase letter
+ * from A to Z. If any character does not meet this criterion, the function returns 0 indicating
+ * invalid abbreviation. Otherwise, it returns 1 indicating a valid abbreviation.
+ *
+ * @param abbr - The abbreviation string to validate.
+ * @return int - 1 if the abbreviation is valid, 0 otherwise.
+ */
 int validAbbr(char *abbr)
 {
 	int len = strlen(abbr);
@@ -14,6 +27,18 @@ int validAbbr(char *abbr)
 	return 1; // OK
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief Reads and validates the abbreviation from the standard input.
+ *
+ * This function prompts the user to enter the abbreviation, reads it from the standard input,
+ * and validates it using the validAbbr function. If the abbreviation is invalid or the input
+ * fails, it prints an error message and returns 0. Otherwise, it returns 1.
+ *
+ * @param abbr - The abbreviation string to store the input.
+ * @return int - 1 if the abbreviation is valid and read successfully, 0 otherwise.
+ */
 int getAbbr(char *abbr)
 {
 	printf("Zkratka:\n");
@@ -26,6 +51,22 @@ int getAbbr(char *abbr)
 	return 1; // OK
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief Finds the positions of the quotes in the input string.
+ *
+ * This function scans the input string to find the positions of the first and second quotes.
+ * It validates if exactly two quotes are present. If the quotes are missing or there are extra
+ * quotes, it prints an error message and returns 0. Otherwise, it returns 1.
+ *
+ * @param quo_1 - Pointer to store the position of the first quote.
+ * @param quo_2 - Pointer to store the position of the second quote.
+ * @param str - The input string to scan.
+ * @param str_size - The size of the input string.
+ * @param abbr - The abbreviation string.
+ * @return int - 1 if the quotes are found and valid, 0 otherwise.
+ */
 int getQuotes(long int *quo_1, long int *quo_2, char *str, long int str_size, char *abbr)
 {
 	for (int i = 0, quo_cnt = 0; i < str_size - 1; i++)
@@ -48,12 +89,45 @@ int getQuotes(long int *quo_1, long int *quo_2, char *str, long int str_size, ch
 	return 1; // OK
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief Extracts the substring enclosed by quotes.
+ *
+ * This function extracts the substring from the input string that is enclosed by the quotes.
+ * The extracted substring is stored in the provided pointer.
+ *
+ * @param str_quo - Pointer to store the extracted substring.
+ * @param str - The input string.
+ * @param quo_1 - The position of the first quote.
+ * @param quo_2 - The position of the second quote.
+ */
 void wrStrQuotes(char **str_quo, char *str, int quo_1, int quo_2)
 {
 	*str_quo = (char *)malloc((quo_2 - quo_1) * sizeof(char));
 	strncpy(*str_quo, str + quo_1 + 1, quo_2 - quo_1 - 1);
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief Searches for the abbreviation in the quoted string.
+ *
+ * This function recursively searches for the abbreviation in the quoted string while considering
+ * the constraints. It prints all possible matches or counts the matches based on the operation type.
+ *
+ * @param op_sign - The operation type ('?' or '#').
+ * @param str - The input string to search within.
+ * @param abbr - The abbreviation to search for.
+ * @param N - The maximum number of letters to use from each word.
+ * @param str_len - The length of the input string.
+ * @param str_pos - The current position in the input string.
+ * @param abbr_pos - The current position in the abbreviation.
+ * @param arr - Array to store the positions of matched letters.
+ * @param word_index - Pointer to track the number of letters used from the current word.
+ * @param flag - Pointer to indicate backtracking.
+ * @param comb_cnt - Pointer to count the number of valid combinations.
+ */
 void getStrQuotes(char op_sign, char *str, char *abbr, int N, int str_len, int str_pos, int abbr_pos, int *arr, int *word_index, int *flag, int *comb_cnt)
 {
 	int abbr_len = strlen(abbr);
@@ -97,6 +171,9 @@ void getStrQuotes(char op_sign, char *str, char *abbr, int N, int str_len, int s
 		}
 	}
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 int main (void)
 {

@@ -1,11 +1,18 @@
-#ifndef __PROGTEST__
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #include <ctype.h>
 
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Represents a node in a linked list for polynomial terms.
+ *
+ * This structure holds the multiplier and power of a polynomial term, and a pointer to the next node in the list.
+ */
 typedef struct TItem
 {
 	struct TItem *m_Next;
@@ -13,6 +20,19 @@ typedef struct TItem
 	int m_Pow;
 } TITEM;
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Creates a new linked list item with the specified multiplier and power.
+ *
+ * Allocates memory for a new TITEM and initializes its multiplier, power, and next pointer.
+ *
+ * @param mul - The multiplier of the polynomial term.
+ * @param pow - The power of the polynomial term.
+ * @param next - Pointer to the next item in the list.
+ * @return Pointer to the newly created item.
+ */
 TITEM *createItem(int mul, int pow, TITEM *next)
 {
 	TITEM *n = (TITEM *)malloc(sizeof(*n));
@@ -22,6 +42,16 @@ TITEM *createItem(int mul, int pow, TITEM *next)
 	return n;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Deletes the entire linked list.
+ *
+ * Frees all nodes in the list and sets the head pointer to NULL.
+ *
+ * @param l - Pointer to the head of the list.
+ */
 void deleteList(TITEM *l)
 {
 	while (l)
@@ -32,8 +62,17 @@ void deleteList(TITEM *l)
 	}
 }
 
-#endif /* __PROGTEST__ */
+// ---------------------------------------------------------------------------------------------------------------------
 
+/**
+ * @brief
+ * Gets the length of the linked list if it is sorted by power in ascending order and multipliers are non-zero.
+ *
+ * Counts the number of nodes in the list, returning 0 if any node violates the sorting order or has a zero multiplier.
+ *
+ * @param x - Pointer to the head of the list.
+ * @return The length of the list if valid, 0 otherwise.
+ */
 int getLen(TITEM *x)
 {
 	int len = 0;
@@ -47,6 +86,17 @@ int getLen(TITEM *x)
 	return len;
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Copies a linked list.
+ *
+ * Creates a new list that is a copy of the given list.
+ *
+ * @param x - Pointer to the head of the list to be copied.
+ * @param res - Pointer to the pointer where the new list will be stored.
+ */
 void copyList(TITEM *x, TITEM **res)
 {
 	TITEM *tmp_res;
@@ -65,6 +115,18 @@ void copyList(TITEM *x, TITEM **res)
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Processes a node and inserts it into the result list at the correct position.
+ *
+ * Inserts a node with the given multiplier and power into the result list, combining terms with the same power.
+ *
+ * @param mul - The multiplier of the polynomial term.
+ * @param pow - The power of the polynomial term.
+ * @param res - Pointer to the pointer of the result list.
+ */
 void processNode(int mul, int pow, TITEM **res)
 {
 	TITEM *tmp = *res;
@@ -100,6 +162,17 @@ void processNode(int mul, int pow, TITEM **res)
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Sums the terms of the polynomial linked list and stores the result in the result list.
+ *
+ * Traverses the given list and processes each node to insert it into the result list.
+ *
+ * @param x - Pointer to the head of the list to be summed.
+ * @param res - Pointer to the pointer of the result list.
+ */
 void getSum(TITEM *x, TITEM **res)
 {
 	while (x)
@@ -109,6 +182,16 @@ void getSum(TITEM *x, TITEM **res)
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Removes terms with a zero multiplier from the result list.
+ *
+ * Traverses the result list and deletes nodes with a zero multiplier.
+ *
+ * @param res - Pointer to the pointer of the result list.
+ */
 void deleteShit(TITEM **res)
 {
 	TITEM *tmp = *res;
@@ -140,6 +223,18 @@ void deleteShit(TITEM **res)
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * @brief
+ * Adds two polynomial linked lists and returns the result.
+ *
+ * Sums the terms of the two given lists and returns the resulting polynomial list.
+ *
+ * @param a - Pointer to the head of the first polynomial list.
+ * @param b - Pointer to the head of the second polynomial list.
+ * @return Pointer to the head of the resulting polynomial list, or NULL if any list is invalid.
+ */
 TITEM *addPoly(TITEM *a, TITEM *b)
 {
 	int a_len = getLen(a), b_len = getLen(b);
@@ -165,11 +260,14 @@ TITEM *addPoly(TITEM *a, TITEM *b)
 	return res;
 }
 
-#ifndef __PROGTEST__
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
 {
 	TITEM *a, *b, *res;
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a = createItem(1, 0, createItem(9, 1, createItem(5, 2, createItem(-3, 3, NULL))));
 	b = createItem(2, 0, createItem(-4, 1, createItem(-6, 2, createItem(15, 3, NULL))));
@@ -187,6 +285,8 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a = createItem(3, 0, createItem(2, 1, createItem(9, 3, NULL)));
 	b = createItem(7, 0, createItem(4, 2, createItem(-1, 3, NULL)));
 	res = addPoly(a, b);
@@ -202,6 +302,8 @@ int main(int argc, char *argv[])
 	deleteList(res);
 	deleteList(a);
 	deleteList(b);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a = createItem(3, -1, createItem(2, 5, createItem(9, 6, NULL)));
 	b = createItem(7, 0, createItem(4, 2, createItem(-1, 3, NULL)));
@@ -223,6 +325,8 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a = createItem(1, 0, createItem(9, 1, createItem(5, 40, createItem(-3, 70, NULL))));
 	b = createItem(-1, 0, createItem(-9, 1, createItem(-5, 40, createItem(3, 70, NULL))));
 	res = addPoly(a, b);
@@ -231,6 +335,8 @@ int main(int argc, char *argv[])
 	deleteList(res);
 	deleteList(a);
 	deleteList(b);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a = createItem(-5, 0, createItem(10, 4, NULL));
 	b = createItem(5, 0, createItem(6, 1, NULL));
@@ -244,6 +350,8 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a = createItem(0, 0, NULL);
 	b = createItem(0, 0, NULL);
 	res = addPoly(a, b);
@@ -254,6 +362,8 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a = createItem(1, 0, createItem(2, 1, NULL));
 	b = createItem(-1, 0, createItem(-2, 1, NULL));
 	res = addPoly(a, b);
@@ -263,6 +373,8 @@ int main(int argc, char *argv[])
 	deleteList(res);
 	deleteList(a);
 	deleteList(b);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a = createItem(7, 7, createItem(-20, 12, NULL));
 	b = createItem(-40, 1, createItem(-100, 20, NULL));
@@ -280,6 +392,8 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a = createItem(0, 0, createItem(100, 5, NULL));
 	b = createItem(-40, 0, createItem(6, 20, NULL));
 	res = addPoly(a, b);
@@ -287,6 +401,8 @@ int main(int argc, char *argv[])
 	deleteList(res);
 	deleteList(a);
 	deleteList(b);
+
+	// -----------------------------------------------------------------------------------------------------------------
 
 	a = createItem(5, 5, createItem(4, 4, NULL));
 	b = createItem(6, 0, createItem(9, 20, NULL));
@@ -296,6 +412,8 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	a = createItem(3, 1, createItem(6, 2, createItem(4, 3, createItem(5, 4, NULL))));
 	b = NULL;
 	res = addPoly(a, b);
@@ -304,7 +422,7 @@ int main(int argc, char *argv[])
 	deleteList(a);
 	deleteList(b);
 
+	// -----------------------------------------------------------------------------------------------------------------
+
 	return 0;
 }
-
-#endif /* __PROGTEST__ */

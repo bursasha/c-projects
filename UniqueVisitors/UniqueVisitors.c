@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+
 #define MAX_REGISTRATION 1000000 // A max possible count of the registered guests, the size of int guest_array.
 #define MAX_ID 99999					// A max possible value of the guest ID, is used for the size of int visit_array.
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 /**
  * Invalidation of an ID number and of the count of general registrations of the guests. Is used at + operation (guest registration).
@@ -19,6 +24,8 @@ int idInvalid ( const int id, const int registrations )
 {
 	return ( id < 0 || id > MAX_ID || registrations > MAX_REGISTRATION );
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 /**
  * Invalidation of the from-to range in the general int guest_array with all registered guests. Is used at ? operation.
@@ -37,6 +44,8 @@ int from_toInvalid ( const int from, const int to, const int registrations )
 	return ( from < 0 || from > to || to >= registrations );
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+
 /**
  * Printing the number of visits of each registered guest. Is used at + operation.
  *
@@ -50,7 +59,8 @@ void printGuestVisit ( const int *visit_array, const int id )
 	(visit_array[id] == 1) ? printf ("> prvni navsteva\n") : printf ("> navsteva #%d\n", visit_array[id]);
 }
 
-//
+// ---------------------------------------------------------------------------------------------------------------------
+
 /**
  * Function for the quicksort, is used as its fourth argument.
  *
@@ -64,6 +74,8 @@ int compareIDs ( const void *id_1, const void *id_2 )
 {
 	return *(int *)id_1 - *(int *)id_2;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 /**
  * Function writes IDs from the guest_array in range from-to to the range_array and sorts them. Is used at ? operation.
@@ -80,6 +92,8 @@ void write_sortRangeArray ( int *range_array, const int *guest_array, const int 
 		range_array[i] = guest_array[j];
 	qsort (range_array, range, sizeof(int), compareIDs); // Sorting ID numbers in ascending order.
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 /**
  * Counts a number of the unique guests in the array in the given range and prints it. Is used at ? operation.
@@ -98,6 +112,9 @@ void countGuestsUnique ( const int *range_array, const int range )
 	}
 	printf("> %d / %d\n", guests_unique, range);
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 
 int main ( void )
 {
