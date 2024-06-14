@@ -1,6 +1,6 @@
 # My C Programming University Projects 👨🏽‍💻
 
-## 🗄️ Repository structure: 📁
+## Repository structure: 📁
 * Each folder corresponds to a separate project. 
 * In each folder you will find:
     * `... .c`: file with the program code.
